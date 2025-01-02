@@ -1,0 +1,24 @@
+# ATTEMPT #1: SUCCESSFUL
+# def twoSum(numbers, target):
+#     seen = {} # number : index 
+#     for index, number in enumerate(numbers):
+#         needed = target - number
+#         if needed in seen:
+#             return [seen[needed]+1, index+1]
+#         seen[number] = index
+
+
+def twoSum(numbers, target):
+    l, r = 0, len(numbers) - 1
+    while l < r:
+        print(l, r)
+        if numbers[l] + numbers[r] == target:
+            return [l+1, r+1]
+        sum = numbers[l] + numbers[r]
+        print(sum)
+        if sum > target:
+            r = r - 1 
+        if sum < target:
+            l = l + 1
+            
+print(twoSum([2,7,11,15],9))
