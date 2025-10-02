@@ -19,44 +19,47 @@ class Solution:
             for c in range(col):
                 if grid[r][c] == 0:
                     dfs(r, c, 0)
+from collections import deque
+from typing import List
 
-# BFS Optimal Solution
-from collections import deque 
-row = len(grid)
-col = len(grid[0])
-def checkBoundaries(r, c, distance):
-    return not (r >= row or r < 0 or c >= col or c < 0 or grid[r][c] < distance)
-def islandsAndTreasure (grid):
-    q = deque()
-    
-    # add all the starting locations (treasures) to the queue 
-    for r in range(row):
-        for c in range(col):
-            if grid[r][c] == 0:
-                q.append((r, c))
+class Solution:
 
-    distance = 0
-    # perform BFS on the q
-    while q:
-        # each layer of BFS
-        for i in range(len(q)):
-            r, c = q.popLeft()
-            grid[r][c] = distance 
+    def islandsAndTreasure(self, grid: List[List[int]]) -> None:  
+        row = len(grid)
+        col = len(grid[0])
+        q = deque()
 
-            # left 
-            if checkBoundaries(r, c - 1):
-                q.append((r, c, distance))
+        # add all starting locations (treasures) to the queue 
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == 0:
+                    q.append((r, c))
+
+        # BFS
+        while q:
+            r, c = q.popleft()
+            distance = grid[r][c]  # current distance
+
+            # left
+            if 0 <= c - 1 < col and grid[r][c - 1] > distance + 1:
+                grid[r][c - 1] = distance + 1
+                q.append((r, c - 1))
+
             # right
-            if checkBoundaries(r, c + 1):
-                q.append((r,c,distance))
-            #up 
-            if checkBoundaries(r - 1, c):
-                q.append((r,c,distance))
-            # down 
-            if checkBoundaries(r - 1, c):
-                q.append((r,c,distance))
+            if 0 <= c + 1 < col and grid[r][c + 1] > distance + 1:
+                grid[r][c + 1] = distance + 1
+                q.append((r, c + 1))
 
-        distance += 1 
+            # up
+            if 0 <= r - 1 < row and grid[r - 1][c] > distance + 1:
+                grid[r - 1][c] = distance + 1
+                q.append((r - 1, c))
+
+            # down
+            if 0 <= r + 1 < row and grid[r + 1][c] > distance + 1:
+                grid[r + 1][c] = distance + 1
+                q.append((r + 1, c))
+
 # this is the inopitmal O(m * n)^2 solution
 INF = 2147483647
 
