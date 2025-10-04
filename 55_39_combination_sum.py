@@ -1,8 +1,7 @@
 # DISTINCT INTEGERS: candidates 
 # target integer
 
-# [2, 3, 6, 7] and target = 7
-
+# [2,3,6,7] and target = 7
 def combinationSum(candidates, target):
     
     res = []
